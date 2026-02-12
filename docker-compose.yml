@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  mediguide-frontend:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+    restart: unless-stopped
+    container_name: mediguide-ai-frontend
+
+  # Optional: Add backend service here when available
+  # mediguide-backend:
+  #   image: your-backend-image
+  #   ports:
+  #     - "8000:8000"
+  #   environment:
+  #     - NODE_ENV=production
+  #   restart: unless-stopped
