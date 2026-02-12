@@ -1,20 +1,55 @@
 version: '3.8'
 
 services:
+  mongodb:
+    image: mongo:7.0
+    container_name: mediguide-mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    environment:
+      - MONGO_INITDB_DATABASE=mediguide_ai
+    restart: unless-stopped
+    networks:
+      - mediguide-network
+
+  mediguide-backend:
+    build: 
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: mediguide-ai-backend
+    ports:
+      - "8000:8000"
+    environment:
+      - NODE_ENV=production
+      - MONGODB_URI=mongodb://mongodb:27017/mediguide_ai
+      - JWT_SECRET=your_super_secret_jwt_key_change_this_in_production
+      - JWT_EXPIRES_IN=7d
+      - PORT=8000
+    depends_on:
+      - mongodb
+    restart: unless-stopped
+    networks:
+      - mediguide-network
+
   mediguide-frontend:
     build: .
+    container_name: mediguide-ai-frontend
     ports:
       - "3000:3000"
     environment:
       - NODE_ENV=production
+      - VITE_API_URL=http://localhost:8000/api
+    depends_on:
+      - mediguide-backend
     restart: unless-stopped
-    container_name: mediguide-ai-frontend
+    networks:
+      - mediguide-network
 
-  # Optional: Add backend service here when available
-  # mediguide-backend:
-  #   image: your-backend-image
-  #   ports:
-  #     - "8000:8000"
-  #   environment:
-  #     - NODE_ENV=production
-  #   restart: unless-stopped
+volumes:
+  mongodb_data:
+
+networks:
+  mediguide-network:
+    driver: bridge
