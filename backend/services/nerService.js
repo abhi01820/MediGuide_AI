@@ -27,9 +27,9 @@ class NERService {
   extractHeight(text) {
     // Patterns: "Height: 175 cm", "Height 175cm", "H: 5'9\"", etc.
     const patterns = [
-      /height[:\s]+(\d+\.?\d*)\s*(cm|centimeter)/i,
-      /height[:\s]+(\d+)\s*'?\s*(\d+)?\s*"?/i, // feet/inches
-      /(\d+\.?\d*)\s*(cm|centimeter)/i
+      /height\s*[:\s]+\s*(\d+\.?\d*)\s*(cm|centimeter)/i,
+      /height\s*[:\s]+\s*(\d+)\s*'\s*(\d+)?\s*"?/i, // feet/inches
+      /(\d+\.?\d*)\s*(cm|centimeter)(?!.*cholesterol)/i // avoid matching with other numbers
     ];
 
     for (const pattern of patterns) {
@@ -46,10 +46,13 @@ class NERService {
           value = (feet * 30.48) + (inches * 2.54);
         }
         
-        return {
-          value: Math.round(value),
-          unit: 'cm'
-        };
+        // Sanity check - height should be between 50-250 cm
+        if (value >= 50 && value <= 250) {
+          return {
+            value: Math.round(value),
+            unit: 'cm'
+          };
+        }
       }
     }
     return null;
@@ -61,8 +64,8 @@ class NERService {
   extractWeight(text) {
     // Patterns: "Weight: 75 kg", "Weight 75kg", "75.5 kg", etc.
     const patterns = [
-      /weight[:\s]+(\d+\.?\d*)\s*(kg|kilogram|lbs|pounds)/i,
-      /(\d+\.?\d*)\s*(kg|kilogram|lbs|pounds)/i
+      /weight\s*[:\s]+\s*(\d+\.?\d*)\s*(kg|kilogram|lbs|pounds)/i,
+      /(\d+\.?\d*)\s*(kg|kilogram)(?!.*\d)/i // Match kg but avoid matching other numbers
     ];
 
     for (const pattern of patterns) {
@@ -76,10 +79,13 @@ class NERService {
           value = value * 0.453592;
         }
         
-        return {
-          value: Math.round(value),
-          unit: 'kg'
-        };
+        // Sanity check - weight should be between 20-300 kg
+        if (value >= 20 && value <= 300) {
+          return {
+            value: Math.round(value),
+            unit: 'kg'
+          };
+        }
       }
     }
     return null;
@@ -116,10 +122,13 @@ class NERService {
    * Extract blood sugar level from text
    */
   extractSugarLevel(text) {
-    // Patterns: "Blood Sugar: 95 mg/dL", "Glucose 95", "Sugar Level 95 mg/dL"
+    // Patterns: "Blood Sugar: 95 mg/dL", "Glucose 95", "Blood Sugar (Fasting): 92 mg/dL"
     const patterns = [
-      /(?:blood\s*sugar|glucose|sugar\s*level)[:\s]+(\d+\.?\d*)\s*(mg\/dl|mmol\/l)?/i,
-      /(?:fasting\s*glucose)[:\s]+(\d+\.?\d*)\s*(mg\/dl|mmol\/l)?/i
+      /blood\s*sugar\s*[\(]?\s*fasting\s*[\)]?\s*[:\s]+\s*(\d+\.?\d*)\s*(mg\/dl|mmol\/l)?/i,
+      /(?:blood\s*sugar|sugar\s*level)\s*[\(]?[^)]*[\)]?\s*[:\s]+\s*(\d+\.?\d*)\s*(mg\/dl|mmol\/l)?/i,
+      /fasting\s*(?:blood\s*)?glucose\s*[:\s]+\s*(\d+\.?\d*)\s*(mg\/dl|mmol\/l)?/i,
+      /glucose\s*[:\s]+\s*(\d+\.?\d*)\s*(mg\/dl|mmol\/l)?/i,
+      /(\d+\.?\d*)\s*mg\/dl\s*(?:glucose|sugar)/i
     ];
 
     for (const pattern of patterns) {
@@ -133,11 +142,14 @@ class NERService {
           value = value * 18.0182;
         }
         
-        return {
-          value: Math.round(value),
-          unit: 'mg/dL',
-          status: this.getSugarStatus(value)
-        };
+        // Sanity check - blood sugar should be between 50-500 mg/dL
+        if (value >= 50 && value <= 500) {
+          return {
+            value: Math.round(value),
+            unit: 'mg/dL',
+            status: this.getSugarStatus(value)
+          };
+        }
       }
     }
     return null;
@@ -148,17 +160,23 @@ class NERService {
    */
   extractCholesterol(text) {
     const patterns = [
-      /cholesterol[:\s]+(\d+\.?\d*)\s*(mg\/dl)?/i,
-      /total\s*cholesterol[:\s]+(\d+\.?\d*)/i
+      /cholesterol\s*[\(]?\s*total\s*[\)]?\s*[:\s]+\s*(\d+\.?\d*)\s*(mg\/dl)?/i,
+      /total\s*cholesterol\s*[:\s]+\s*(\d+\.?\d*)\s*(mg\/dl)?/i,
+      /cholesterol\s*[:\s]+\s*(\d+\.?\d*)\s*(mg\/dl)?/i,
+      /(\d+\.?\d*)\s*mg\/dl\s*cholesterol/i
     ];
 
     for (const pattern of patterns) {
       const match = text.match(pattern);
       if (match) {
-        return {
-          value: parseFloat(match[1]),
-          unit: 'mg/dL'
-        };
+        const value = parseFloat(match[1]);
+        // Sanity check - cholesterol should be between 100-400 mg/dL
+        if (value >= 100 && value <= 400) {
+          return {
+            value: value,
+            unit: 'mg/dL'
+          };
+        }
       }
     }
     return null;
@@ -169,18 +187,23 @@ class NERService {
    */
   extractHeartRate(text) {
     const patterns = [
-      /heart\s*rate[:\s]+(\d+)\s*bpm/i,
-      /pulse[:\s]+(\d+)\s*bpm/i,
-      /(\d+)\s*beats?\s*per\s*minute/i
+      /heart\s*rate\s*[:\s]+\s*(\d+)\s*bpm/i,
+      /pulse\s*[:\s]+\s*(\d+)\s*bpm/i,
+      /(\d+)\s*beats?\s*per\s*minute/i,
+      /(\d+)\s*bpm/i
     ];
 
     for (const pattern of patterns) {
       const match = text.match(pattern);
       if (match) {
-        return {
-          value: parseInt(match[1]),
-          unit: 'bpm'
-        };
+        const value = parseInt(match[1]);
+        // Sanity check - heart rate should be between 30-220 bpm
+        if (value >= 30 && value <= 220) {
+          return {
+            value: value,
+            unit: 'bpm'
+          };
+        }
       }
     }
     return null;

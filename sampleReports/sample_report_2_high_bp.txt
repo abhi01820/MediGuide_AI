@@ -1,0 +1,25 @@
+HEALTH MEDICAL REPORT
+
+Patient Name: Sarah Smith
+Date: February 12, 2026
+Report ID: HR-2026-002
+
+VITAL SIGNS & MEASUREMENTS
+
+Height: 165 cm
+Weight: 75 kg
+Blood Pressure: 145/92 mmHg
+Blood Sugar (Fasting): 95 mg/dL
+Heart Rate: 85 bpm
+Cholesterol (Total): 220 mg/dL
+
+HEALTH STATUS
+
+⚠️ ALERT: Blood pressure is elevated (Stage 2 Hypertension)
+Patient reports family history of heart disease.
+
+DOCTOR'S NOTES
+
+High blood pressure detected. Immediate lifestyle modifications required.
+Recommended: Low sodium diet, increase cardiovascular exercise.
+Follow-up: Schedule cardiology consultation within 2 weeks.

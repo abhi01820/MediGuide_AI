@@ -1,0 +1,26 @@
+HEALTH MEDICAL REPORT
+
+Patient Name: Emily Davis
+Date: February 12, 2026
+Report ID: HR-2026-004
+
+VITAL SIGNS & MEASUREMENTS
+
+Height: 160 cm
+Weight: 68 kg
+Blood Pressure: 122/80 mmHg
+Blood Sugar (Fasting): 115 mg/dL
+Heart Rate: 68 bpm
+Cholesterol (Total): 195 mg/dL
+
+HEALTH STATUS
+
+⚠️ WARNING: Blood sugar in pre-diabetes range
+BMI: 26.6 (Overweight)
+
+DOCTOR'S NOTES
+
+Pre-diabetes detected. Patient at risk for Type 2 Diabetes.
+Recommended: Weight loss of 10-15 lbs, increase physical activity.
+Dietary modifications: Reduce refined carbs and sugars.
+Follow-up: Retest fasting glucose in 3 months.

@@ -1,0 +1,29 @@
+HEALTH MEDICAL REPORT
+
+Patient Name: Robert Wilson
+Date: February 12, 2026
+Report ID: HR-2026-005
+
+VITAL SIGNS & MEASUREMENTS
+
+Height: 170 cm
+Weight: 105 kg
+Blood Pressure: 138/90 mmHg
+Blood Sugar (Fasting): 108 mg/dL
+Heart Rate: 88 bpm
+Cholesterol (Total): 235 mg/dL
+
+HEALTH STATUS
+
+⚠️ CRITICAL: BMI 36.3 - OBESE Class II
+⚠️ ALERT: High blood pressure (Stage 1 Hypertension)
+⚠️ WARNING: Pre-diabetes range
+⚠️ ALERT: Borderline high cholesterol
+
+DOCTOR'S NOTES
+
+Patient has multiple risk factors for cardiovascular disease.
+Comprehensive weight management program recommended.
+Recommended: Structured exercise program, nutritionist consultation.
+Consider bariatric surgery evaluation if BMI remains >35.
+Follow-up: Monthly monitoring for 6 months.

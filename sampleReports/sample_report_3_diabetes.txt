@@ -1,0 +1,29 @@
+HEALTH MEDICAL REPORT
+
+Patient Name: Michael Johnson
+Date: February 12, 2026
+Report ID: HR-2026-003
+
+VITAL SIGNS & MEASUREMENTS
+
+Height: 180 cm
+Weight: 95 kg
+Blood Pressure: 135/88 mmHg
+Blood Sugar (Fasting): 145 mg/dL
+Heart Rate: 78 bpm
+Cholesterol (Total): 245 mg/dL
+
+HEALTH STATUS
+
+⚠️ CRITICAL: Blood sugar levels indicate DIABETES
+⚠️ ALERT: Blood pressure elevated (Stage 1 Hypertension)
+⚠️ ALERT: High cholesterol detected
+BMI indicates obesity (29.3)
+
+DOCTOR'S NOTES
+
+Patient diagnosed with Type 2 Diabetes.
+Immediate intervention required for blood sugar management.
+Recommended: Strict carbohydrate control, medication therapy.
+Follow-up: Endocrinologist consultation scheduled.
+HbA1c test ordered to assess long-term glucose control.

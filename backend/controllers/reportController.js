@@ -40,7 +40,15 @@ exports.uploadReport = async (req, res) => {
       analysis: {
         confidence: analysisResult.confidence,
         relations: analysisResult.relations,
-        extractedMetrics: Object.keys(analysisResult.healthMetrics).length
+        extractedMetrics: Object.keys(analysisResult.healthMetrics).length,
+        textPreview: analysisResult.rawText,
+        timestamp: analysisResult.extractedAt
+      },
+      debug: {
+        fileName: req.file.originalname,
+        fileSize: req.file.size,
+        mimeType: req.file.mimetype,
+        metricsFound: Object.keys(analysisResult.healthMetrics)
       }
     });
   } catch (error) {

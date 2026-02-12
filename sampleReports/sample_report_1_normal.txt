@@ -1,0 +1,24 @@
+HEALTH MEDICAL REPORT
+
+Patient Name: John Doe
+Date: February 12, 2026
+Report ID: HR-2026-001
+
+VITAL SIGNS & MEASUREMENTS
+
+Height: 175 cm
+Weight: 70 kg
+Blood Pressure: 118/78 mmHg
+Blood Sugar (Fasting): 92 mg/dL
+Heart Rate: 72 bpm
+Cholesterol (Total): 185 mg/dL
+
+HEALTH STATUS
+
+All measurements are within normal healthy ranges.
+Patient maintains regular exercise routine.
+
+DOCTOR'S NOTES
+
+Patient is in good health. Continue current lifestyle.
+Recommended: Maintain balanced diet and regular physical activity.
